@@ -1,0 +1,85 @@
+.ob-page {
+  height: 100vh;
+  background: linear-gradient(180deg, #f4fbf6 0, #fff 62%, #eaf7ef 100%);
+  display: flex;
+  flex-direction: column;
+  animation: pageIn 0.32s ease both;
+}
+.ob-swiper {
+  flex: 1;
+}
+.ob-slide {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60rpx 60rpx 0;
+  gap: 32rpx;
+  text-align: center;
+}
+.ob-icon {
+  font-size: 124rpx;
+  line-height: 1;
+  animation: floatLeaf 2.8s ease-in-out infinite;
+}
+.ob-title {
+  font-size: 44rpx;
+  font-weight: 800;
+  color: #21352b;
+}
+.ob-desc {
+  font-size: 28rpx;
+  color: #5d6a62;
+  line-height: 1.8;
+}
+.ob-dots {
+  display: flex;
+  justify-content: center;
+  gap: 14rpx;
+  padding: 32rpx 0;
+}
+.ob-dot {
+  width: 14rpx;
+  height: 14rpx;
+  border-radius: 50%;
+  background: #ddd;
+  transition: all 0.3s;
+}
+.ob-dot-on {
+  width: 40rpx;
+  border-radius: 7rpx;
+  background: #1a7a4a;
+  box-shadow: 0 0 14rpx rgba(26, 122, 74, 0.24);
+}
+.ob-btns {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40rpx calc(30rpx + env(safe-area-inset-bottom));
+}
+.ob-skip {
+  font-size: 28rpx;
+  color: #89958d;
+  padding: 20rpx;
+  min-width: 100rpx;
+  transition: all 0.18s ease;
+}
+.ob-skip-empty {
+  min-width: 100rpx;
+}
+.ob-next {
+  background: linear-gradient(135deg, #1a7a4a, #31b873) !important;
+  color: #fff !important;
+  border-radius: 50rpx !important;
+  font-size: 30rpx !important;
+  font-weight: 800 !important;
+  border: none !important;
+  padding: 0 60rpx !important;
+  height: 92rpx !important;
+  line-height: 92rpx !important;
+  box-shadow: 0 16rpx 36rpx rgba(26, 122, 74, 0.22);
+}
+.ob-next::after {
+  border: none !important;
+}

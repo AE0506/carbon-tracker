@@ -1,0 +1,93 @@
+<scroll-view scroll-y class="learn-page">
+  <view class="learn-hdr">
+    <view class="lh-icon">📚</view>
+    <view class="lh-title">低碳知识学院</view>
+    <view class="lh-sub">学习碳足迹知识，养成环保好习惯</view>
+  </view>
+
+  <view class="quiz-bar" hover-class="tap-card" hover-stay-time="90" bindtap="onStartQuiz" wx:if="{{!showResult}}">
+    <view class="qb-l">
+      <view class="qb-icon">🧠</view>
+      <view class="qb-info">
+        <view class="qb-title">每日答题</view>
+        <view class="qb-sub">答对获得10积分奖励</view>
+      </view>
+    </view>
+    <view class="qb-btn">开始答题</view>
+  </view>
+
+  <view class="quiz-result" wx:if="{{showResult}}">
+    <view class="qr-icon">🎉</view>
+    <view class="qr-title">今日已答题</view>
+    <view class="qr-score">获得 {{quizScore}} 积分</view>
+  </view>
+
+  <view class="sec-title">知识文章</view>
+  <view class="article-list">
+    <view wx:for="{{articles}}" wx:key="id" class="article-card" hover-class="tap-card" hover-stay-time="90" style="background:{{item.bg}}" bindtap="onArticleTap" data-id="{{item.id}}">
+      <view class="ac-icon" style="color:{{item.color}}">{{item.icon}}</view>
+      <view class="ac-info">
+        <view class="ac-title" style="color:{{item.color}}">{{item.title}}</view>
+        <view class="ac-sub">{{item.subtitle}}</view>
+      </view>
+      <view class="ac-arr">›</view>
+    </view>
+  </view>
+
+  <view class="safe-bottom"></view>
+</scroll-view>
+
+<view class="article-popup" wx:if="{{selArticle}}">
+  <view class="ap-hdr">
+    <view class="aph-icon" style="background:{{selArticle.bg}};color:{{selArticle.color}}">{{selArticle.icon}}</view>
+    <view class="aph-info">
+      <view class="aph-title" style="color:{{selArticle.color}}">{{selArticle.title}}</view>
+      <view class="aph-sub">{{selArticle.subtitle}}</view>
+    </view>
+    <view class="aph-close" hover-class="tap-icon" bindtap="onCloseArticle">✕</view>
+  </view>
+  <scroll-view scroll-y class="ap-body">
+    <block wx:for="{{selArticle.sections}}" wx:for-item="sec" wx:key="index">
+      <view wx:if="{{sec.type==='text'}}" class="sec-text">{{sec.content}}</view>
+      <view wx:if="{{sec.type==='tip'}}" class="sec-tip">💡 {{sec.content}}</view>
+      <view wx:if="{{sec.type==='fact'}}" class="sec-fact">📊 {{sec.content}}</view>
+      <view wx:if="{{sec.type==='compare'}}" class="compare-list">
+        <view wx:for="{{sec.data}}" wx:for-item="row" wx:key="way" class="compare-row">
+          <view class="cr-icon">{{row.icon}}</view>
+          <view class="cr-info">
+            <view class="cr-way">{{row.way}}</view>
+            <view class="cr-emission">{{row.emission}}</view>
+            <view class="cr-benefit" wx:if="{{row.benefit}}">{{row.benefit}}</view>
+          </view>
+        </view>
+      </view>
+      <view wx:if="{{sec.type==='tips'}}" class="tips-list">
+        <view wx:for="{{sec.data}}" wx:for-item="tip" wx:key="title" class="tip-item">
+          <view class="ti-title">✓ {{tip.title}}</view>
+          <view class="ti-detail">{{tip.detail}}</view>
+        </view>
+      </view>
+      <view wx:if="{{sec.type==='challenge'}}" class="challenge-list">
+        <view wx:for="{{sec.data}}" wx:for-item="c" wx:key="week" class="challenge-item">
+          <view class="ci-week">{{c.week}}</view>
+          <view class="ci-theme">{{c.theme}}</view>
+          <view class="ci-desc">{{c.desc}}</view>
+        </view>
+      </view>
+    </block>
+  </scroll-view>
+</view>
+
+<view class="quiz-popup" wx:if="{{showQuiz}}">
+  <view class="qp-hdr">每日答题 · {{quizIndex+1}}/{{quizData.length}}</view>
+  <view class="qp-body">
+    <view class="qp-q">{{quizData[quizIndex].q}}</view>
+    <view class="qp-options">
+      <view wx:for="{{quizData[quizIndex].options}}" wx:for-item="opt" wx:key="index" class="qp-opt {{quizAnswered && index===quizData[quizIndex].answer ? 'correct' : (quizAnswered && index===selAnswerIdx ? 'wrong' : '')}}" hover-class="tap-soft" bindtap="onAnswer" data-idx="{{index}}">{{opt}}</view>
+    </view>
+    <view class="qp-exp" wx:if="{{quizAnswered}}">{{quizData[quizIndex].exp}}</view>
+    <view class="qp-next" wx:if="{{quizAnswered}}" hover-class="tap-soft" bindtap="onNextQuiz">{{quizIndex+1>=quizData.length?'完成':'下一题'}}</view>
+  </view>
+</view>
+
+<view class="mask" wx:if="{{selArticle || showQuiz}}" bindtap="onCloseAll"></view>

@@ -1,0 +1,84 @@
+<!-- pages/leaderboard/leaderboard.wxml -->
+<view class="lb-page">
+  <!-- Header -->
+  <view class="lb-hdr">
+    <view class="lb-hdr-t">🏆 低碳排行榜</view>
+    <view class="lb-hdr-s">和更多人一起践行低碳生活</view>
+    <view class="my-rank-tag" wx:if="{{myRank}}">我的排名：第 {{myRank}} 名</view>
+  </view>
+
+  <!-- Tab -->
+  <view class="tab-row">
+    <view class="tab-item {{tab==='week'?'tab-on':''}}" hover-class="tap-soft" data-tab="week" bindtap="onTabTap">本周积分榜</view>
+    <view class="tab-item {{tab==='total'?'tab-on':''}}" hover-class="tap-soft" data-tab="total" bindtap="onTabTap">总打卡天数榜</view>
+  </view>
+
+  <!-- 加载中 -->
+  <view class="loading-wrap" wx:if="{{loading}}">
+    <view class="loading-icon">⏳</view>
+    <view class="loading-text">加载排行榜中...</view>
+  </view>
+
+  <!-- 排行列表 -->
+  <view class="lb-list" wx:if="{{!loading}}">
+    <!-- 前三名特殊展示 -->
+    <view class="top3-row" wx:if="{{tab==='week'&&weekList.length>=3}}">
+      <!-- 第二名 -->
+      <view class="top3-item t2">
+        <view class="top3-crown">🥈</view>
+        <view class="top3-av">{{weekList[1].avatar}}</view>
+        <view class="top3-name">{{weekList[1].name}}</view>
+        <view class="top3-pts">{{weekList[1].pts}}分</view>
+      </view>
+      <!-- 第一名 -->
+      <view class="top3-item t1">
+        <view class="top3-crown">🥇</view>
+        <view class="top3-av big">{{weekList[0].avatar}}</view>
+        <view class="top3-name">{{weekList[0].name}}</view>
+        <view class="top3-pts gold">{{weekList[0].pts}}分</view>
+      </view>
+      <!-- 第三名 -->
+      <view class="top3-item t3">
+        <view class="top3-crown">🥉</view>
+        <view class="top3-av">{{weekList[2].avatar}}</view>
+        <view class="top3-name">{{weekList[2].name}}</view>
+        <view class="top3-pts">{{weekList[2].pts}}分</view>
+      </view>
+    </view>
+
+    <!-- 其余排名 -->
+    <view class="lb-rows">
+      <block wx:if="{{tab==='week'}}">
+        <view wx:for="{{weekList}}" wx:key="rank"
+          wx:if="{{weekList.length<3||item.rank>3}}"
+          class="lb-row {{item.isMe?'lb-me':''}}">
+          <view class="lb-rank">{{item.rank}}</view>
+          <view class="lb-av">{{item.avatar}}</view>
+          <view class="lb-info">
+            <view class="lb-name">{{item.name}}{{item.isMe?' (我)':''}}</view>
+            <view class="lb-sub">累计 {{item.days}} 天打卡</view>
+          </view>
+          <view class="lb-val">{{item.pts}}<text class="lb-unit">分</text></view>
+        </view>
+      </block>
+      <block wx:else>
+        <view wx:for="{{totalList}}" wx:key="rank"
+          class="lb-row {{item.isMe?'lb-me':''}}">
+          <view class="lb-rank {{item.rank<=3?'lb-rank-top':''}}">{{item.rank}}</view>
+          <view class="lb-av">{{item.avatar}}</view>
+          <view class="lb-info">
+            <view class="lb-name">{{item.name}}{{item.isMe?' (我)':''}}</view>
+            <view class="lb-sub">累计 {{item.pts}} 积分</view>
+          </view>
+          <view class="lb-val">{{item.days}}<text class="lb-unit">天</text></view>
+        </view>
+      </block>
+    </view>
+  </view>
+
+  <!-- 分享 -->
+  <view class="share-wrap">
+    <button open-type="share" hover-class="tap-soft" class="share-btn">📤 分享排行榜给好友</button>
+  </view>
+  <view class="safe-bottom"></view>
+</view>

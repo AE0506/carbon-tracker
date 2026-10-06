@@ -1,0 +1,90 @@
+<view class="rec-page">
+  <view class="rec-hdr">
+    <view class="rec-title">记录今日行为</view>
+    <view class="rec-sub">{{alreadyRecorded?'今日已打卡，可修改':'选择今天的主要行为，即可完成打卡'}}</view>
+    <view class="already-tag" wx:if="{{alreadyRecorded}}">已打卡 ✅</view>
+  </view>
+  <view class="error-toast {{showError?'error-show':''}}">
+    <text class="error-icon">⚠️</text>
+    <text class="error-text">{{errorMsg}}</text>
+  </view>
+  <view class="preview pv-{{previewGrade.level}}" wx:if="{{allSelected}}">
+    <view class="pv-left">
+      <view class="pv-emoji">{{previewTree.label==='小苗'?'🌱':previewTree.label==='小树'?'🌿':previewTree.label==='大树'?'🌳':'🌲'}}</view>
+      <view><view class="pv-score">预计评分 {{previewScore}} 分 · {{previewGrade.label}}</view><view class="pv-tree">将种下一棵{{previewTree.label}}</view></view>
+    </view>
+    <view class="pv-pts">+{{10-previewScore}} 积分</view>
+  </view>
+  <view class="opt-label">🚌 出行方式</view>
+  <view class="opts-grid">
+    <view wx:for="{{transportOpts}}" wx:key="key" class="opt-item {{sel.transport===item.key?'opt-on':''}}" hover-class="tap-card" hover-stay-time="80" data-cat="transport" data-key="{{item.key}}" bindtap="onSelectOpt">
+      <view class="opt-icon">{{item.icon}}</view><view class="opt-name">{{item.label}}</view>
+      <view class="opt-sc {{sel.transport===item.key?'opt-sc-on':''}}">{{item.scoreLabel}}</view>
+    </view>
+  </view>
+  <view class="divider-bar"></view>
+  <view class="opt-label">🍽️ 饮食类型</view>
+  <view class="opts-grid">
+    <view wx:for="{{dietOpts}}" wx:key="key" class="opt-item {{item.span?'opt-span':''}} {{sel.diet===item.key?'opt-on':''}}" hover-class="tap-card" hover-stay-time="80" data-cat="diet" data-key="{{item.key}}" bindtap="onSelectOpt">
+      <view class="opt-icon">{{item.icon}}</view><view class="opt-name">{{item.label}}</view>
+      <view class="opt-sc {{sel.diet===item.key?'opt-sc-on':''}}">{{item.scoreLabel}}</view>
+    </view>
+  </view>
+  <view class="divider-bar"></view>
+  <view class="opt-label">🏠 生活状态</view>
+  <view class="opts-grid">
+    <view wx:for="{{statusOpts}}" wx:key="key" class="opt-item {{sel.status===item.key?'opt-on':''}}" hover-class="tap-card" hover-stay-time="80" data-cat="status" data-key="{{item.key}}" bindtap="onSelectOpt">
+      <view class="opt-icon">{{item.icon}}</view><view class="opt-name">{{item.label}}</view>
+      <view class="opt-sc {{sel.status===item.key?'opt-sc-on':''}}">{{item.scoreLabel}}</view>
+    </view>
+  </view>
+  <view class="subm-wrap">
+    <button class="subm-btn {{(!allSelected||submitting)?'btn-disabled':''}}" hover-class="tap-soft" disabled="{{!allSelected||submitting}}" loading="{{submitting}}" bindtap="onSubmit">
+      {{submitting?'种树中...':(alreadyRecorded?'更新今日记录':'完成打卡，种下今日的树 🌱')}}
+    </button>
+    <view class="subm-tip" wx:if="{{!allSelected}}">请先完成三项选择</view>
+    <button class="record-delete" wx:if="{{alreadyRecorded&&!submitting}}" hover-class="tap-soft" bindtap="onDelete">删除今日记录</button>
+  </view>
+  <view class="safe-bottom"></view>
+  <view class="ta-layer {{showTreeAnim?'ta-show':''}}">
+    <view class="ta-halo"></view>
+    <view class="ta-wave ta-wave-a"></view>
+    <view class="ta-wave ta-wave-b"></view>
+    <view class="ta-leaves {{showTreeAnim?'ta-leaves-on':''}}">
+      <text class="leaf lf1">🍃</text><text class="leaf lf2">🍃</text><text class="leaf lf3">🍃</text><text class="leaf lf4">🍃</text>
+    </view>
+    <view class="ta-tree {{showTreeAnim?'ta-play':''}}">{{previewTree&&previewTree.label==='小苗'?'🌱':previewTree&&previewTree.label==='小树'?'🌿':previewTree&&previewTree.label==='大树'?'🌳':'🌲'}}</view>
+    <view class="ta-ground"><view class="ta-soil"></view></view>
+    <view class="ta-sparks {{showTreeAnim?'ta-sparks-on':''}}">
+      <text class="sp sp1">✨</text><text class="sp sp2">🍃</text><text class="sp sp3">✦</text><text class="sp sp4">🍃</text><text class="sp sp5">✨</text><text class="sp sp6">🍃</text>
+    </view>
+  </view>
+  <view class="overlay {{showResult?'ov-show':''}}">
+    <view class="ov-card {{showResult?'ov-card-show':''}}">
+      <view class="ov-emoji">{{result&&result.treeInfo.label==='小苗'?'🌱':result&&result.treeInfo.label==='小树'?'🌿':result&&result.treeInfo.label==='大树'?'🌳':'🌲'}}</view>
+      <view class="ov-title">种下了一棵{{result.treeInfo.label}}！</view>
+      <view class="ov-score-row">
+        <view class="ov-snum">{{result.score}}</view><view class="ov-slbl">分</view>
+        <view class="badge-{{result.grade.level}}">{{result.grade.label}}</view>
+      </view>
+      <view class="ov-msg-box"><view class="ov-msg">{{result.fb.msg}}</view><view class="ov-sug">💡 {{result.fb.sug}}</view></view>
+      <view class="ov-info-row">
+        <view class="ov-info-col"><view class="ov-inum">{{result.treeInfo.treeValue}}</view><view class="ov-ilbl">树木值</view></view>
+        <view class="ov-idiv"></view>
+        <view class="ov-info-col"><view class="ov-inum" style="color:#1a7a4a">+{{result.pts}}</view><view class="ov-ilbl">获得积分</view></view>
+      </view>
+      <button class="ov-btn" bindtap="onCloseResult">好的，继续加油！</button>
+      <view class="ov-del" bindtap="onDelete">删除今日记录</view>
+    </view>
+  </view>
+  <view class="ach-ov {{showAchieve?'ov-show':''}}">
+    <view class="ach-card {{showAchieve?'ov-card-show':''}}">
+      <view class="ach-conf">🎉</view>
+      <view class="ach-title">新成就解锁！</view>
+      <view wx:for="{{newBadges}}" wx:key="id" class="ach-item">
+        <view class="ach-icon">{{item.icon}}</view><view class="ach-name">{{item.name}}</view>
+      </view>
+      <button class="ov-btn" bindtap="onCloseAchieve">太棒了！</button>
+    </view>
+  </view>
+</view>

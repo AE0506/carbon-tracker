@@ -1,0 +1,66 @@
+{
+  "pages": [
+    "pages/onboarding/onboarding",
+    "pages/index/index",
+    "pages/record/record",
+    "pages/stats/stats",
+    "pages/forest/forest",
+    "pages/achievement/achievement",
+    "pages/profile/profile",
+    "pages/tips/tips",
+    "pages/challenge/challenge",
+    "pages/leaderboard/leaderboard",
+    "pages/history/history",
+    "pages/learn/learn",
+    "pages/guide/guide"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#1a7a4a",
+    "navigationBarTitleText": "碳迹",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#f5f5f5"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#1a7a4a",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "assets/icons/home.png",
+        "selectedIconPath": "assets/icons/home-active.png"
+      },
+      {
+        "pagePath": "pages/record/record",
+        "text": "记录",
+        "iconPath": "assets/icons/record.png",
+        "selectedIconPath": "assets/icons/record-active.png"
+      },
+      {
+        "pagePath": "pages/stats/stats",
+        "text": "数据",
+        "iconPath": "assets/icons/stats.png",
+        "selectedIconPath": "assets/icons/stats-active.png"
+      },
+      {
+        "pagePath": "pages/guide/guide",
+        "text": "建议",
+        "iconPath": "assets/icons/forest.png",
+        "selectedIconPath": "assets/icons/forest-active.png"
+      },
+      {
+        "pagePath": "pages/achievement/achievement",
+        "text": "成就",
+        "iconPath": "assets/icons/achieve.png",
+        "selectedIconPath": "assets/icons/achieve-active.png"
+      }
+    ]
+  },
+  "cloud": true,
+  "lazyCodeLoading": "requiredComponents",
+  "sitemapLocation": "sitemap.json",
+  "style": "v2"
+}

@@ -1,0 +1,101 @@
+<!-- pages/history/history.wxml -->
+<view class="hist-page">
+  <!-- 月份导航 -->
+  <view class="month-nav">
+    <view class="mn-arrow" hover-class="tap-icon" bindtap="onPrevMonth">‹</view>
+    <view class="mn-title">{{year}} 年 {{month}} 月</view>
+    <view class="mn-arrow" hover-class="tap-icon" bindtap="onNextMonth">›</view>
+  </view>
+
+  <!-- 月统计 -->
+  <view class="month-stats">
+    <view class="ms-item"><view class="ms-n">{{monthStats.totalDays}}</view><view class="ms-l">打卡天数</view></view>
+    <view class="ms-d"></view>
+    <view class="ms-item"><view class="ms-n" style="color:#1a7a4a">{{monthStats.lowDays}}</view><view class="ms-l">低碳天数</view></view>
+    <view class="ms-d"></view>
+    <view class="ms-item"><view class="ms-n">{{monthStats.avgScore}}</view><view class="ms-l">平均评分</view></view>
+    <view class="ms-d"></view>
+    <view class="ms-item"><view class="ms-n">{{monthStats.totalTrees}}</view><view class="ms-l">种树棵数</view></view>
+  </view>
+
+  <!-- 星期标题 -->
+  <view class="weekdays">
+    <view class="wd" wx:for="{{['日','一','二','三','四','五','六']}}" wx:key="index">{{item}}</view>
+  </view>
+
+  <!-- 加载中 -->
+  <view class="loading-wrap" wx:if="{{loading}}">
+    <view class="loading-icon">🌿</view>
+    <view class="loading-text">加载中...</view>
+  </view>
+
+  <!-- 日历格子 -->
+  <view class="cal-grid" wx:if="{{!loading}}">
+    <view wx:for="{{calDays}}" wx:key="index"
+      class="cal-cell {{item&&item.isToday?'cal-today':''}} {{item&&item.hasRecord?'cal-has-rec':''}} {{item&&item.isFuture?'cal-future':''}} {{!item?'cal-empty':''}}"
+      hover-class="tap-card"
+      data-date="{{item.date}}" data-has-record="{{item.hasRecord}}"
+      bindtap="onDayTap">
+      <block wx:if="{{item}}">
+        <view class="cal-day {{item.hasRecord?'cal-day-rec':''}}">{{item.day}}</view>
+        <view class="cal-tree" wx:if="{{item.hasRecord}}">{{item.treeEmoji}}</view>
+        <view class="cal-dot" wx:else></view>
+      </block>
+    </view>
+  </view>
+
+  <!-- 图例 -->
+  <view class="legend-row" style="padding:16rpx 30rpx 24rpx;">
+    <view class="leg"><view class="leg-d" style="background:#1a7a4a"></view><text>低碳</text></view>
+    <view class="leg"><view class="leg-d" style="background:#f0a500"></view><text>一般</text></view>
+    <view class="leg"><view class="leg-d" style="background:#e05c3a"></view><text>偏高</text></view>
+    <view class="leg"><view class="leg-d" style="background:#f0f0f0"></view><text>未打卡</text></view>
+  </view>
+
+  <!-- 月内记录列表 -->
+  <view class="sec-title" wx:if="{{records.length>0}}">本月打卡记录（{{records.length}} 天）</view>
+  <view class="rec-list" wx:if="{{records.length>0}}">
+    <view wx:for="{{records}}" wx:key="date"
+      class="rec-item"
+      hover-class="tap-soft"
+      data-date="{{item.date}}" data-has-record="{{true}}"
+      bindtap="onDayTap">
+      <view class="ri-date">{{item.date.slice(5)}}</view>
+      <view class="ri-tree">{{item.score<=1?'🌲':item.score<=3?'🌳':item.score<=5?'🌿':'🌱'}}</view>
+      <view class="ri-info">
+        <view class="ri-score" style="color:{{item.score<=3?'#1a7a4a':item.score<=6?'#f0a500':'#e05c3a'}}">{{item.score<=3?'低碳':item.score<=6?'一般':'偏高'}}</view>
+        <view class="ri-sub">评分 {{item.score}} 分 · +{{10-item.score<1?1:10-item.score}} 积分</view>
+      </view>
+      <view class="ri-arr">›</view>
+    </view>
+  </view>
+
+  <view class="empty-wrap" wx:if="{{!loading&&records.length===0}}">
+    <view class="empty-icon">📅</view>
+    <view class="empty-text">本月还没有打卡记录</view>
+  </view>
+
+  <view class="safe-bottom"></view>
+
+  <!-- 详情弹窗 -->
+  <view class="overlay {{showDetail?'ov-show':''}}" bindtap="onCloseDetail">
+    <view class="det-card {{showDetail?'ov-card-show':''}}" catchtap="onCloseDetail">
+      <view class="dc-emoji">{{selRecord.treeEmoji}}</view>
+      <view class="dc-date">{{selRecord.date}}</view>
+      <view class="dc-grade" style="background:{{selRecord.gradeColor}}20;color:{{selRecord.gradeColor}}">{{selRecord.gradeLabel}}</view>
+      <view class="dc-score-row">
+        <view class="dc-score-num">{{selRecord.score}}</view>
+        <view class="dc-score-lbl">碳排分</view>
+        <view class="dc-tv-num">{{selRecord.treeValue}}</view>
+        <view class="dc-score-lbl">树木值</view>
+      </view>
+      <view class="dc-behaviors">
+        <view class="dc-bh"><view class="dc-bh-icon">🚌</view><view class="dc-bh-txt">{{selRecord.transportZH}}</view></view>
+        <view class="dc-bh"><view class="dc-bh-icon">🍽️</view><view class="dc-bh-txt">{{selRecord.dietZH}}</view></view>
+        <view class="dc-bh"><view class="dc-bh-icon">🏠</view><view class="dc-bh-txt">{{selRecord.statusZH}}</view></view>
+      </view>
+      <view class="dc-pts">本次获得 +{{10-selRecord.score<1?1:10-selRecord.score}} 积分</view>
+      <view class="dc-close" hover-class="tap-soft" bindtap="onCloseDetail">关闭</view>
+    </view>
+  </view>
+</view>

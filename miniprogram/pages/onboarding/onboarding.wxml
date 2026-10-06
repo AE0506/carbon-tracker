@@ -1,0 +1,19 @@
+<view class="ob-page">
+  <swiper class="ob-swiper" current="{{current}}" bindchange="onSwiperChange" duration="400">
+    <swiper-item wx:for="{{slides}}" wx:key="index">
+      <view class="ob-slide">
+        <view class="ob-icon">{{item.icon}}</view>
+        <view class="ob-title">{{item.title}}</view>
+        <view class="ob-desc">{{item.desc}}</view>
+      </view>
+    </swiper-item>
+  </swiper>
+  <view class="ob-dots">
+    <view wx:for="{{slides}}" wx:key="index" class="ob-dot {{index===current?'ob-dot-on':''}}"></view>
+  </view>
+  <view class="ob-btns">
+    <view class="ob-skip" hover-class="tap-soft" bindtap="onSkip" wx:if="{{!isLast}}">跳过</view>
+    <view class="ob-skip-empty" wx:else></view>
+    <button class="ob-next" hover-class="tap-soft" bindtap="onNext">{{isLast?'开始使用 🌱':'下一步'}}</button>
+  </view>
+</view>

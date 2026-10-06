@@ -1,0 +1,56 @@
+<scroll-view scroll-y class="forest-page" refresher-enabled bindrefresherrefresh="onPullDownRefresh">
+  <view class="f-hdr">
+    <view class="f-hdr-t">我的森林 🌳</view>
+    <view class="f-hdr-s">每次打卡都会种下一棵树</view>
+    <view class="f-stats" wx:if="{{stats}}">
+      <view class="fst"><view class="fst-n">{{stats.totalTrees}}</view><view class="fst-l">棵树</view></view>
+      <view class="fst-d"></view>
+      <view class="fst"><view class="fst-n">{{stats.co2Saved}}</view><view class="fst-l">kg减排</view></view>
+      <view class="fst-d"></view>
+      <view class="fst"><view class="fst-n">{{stats.giantCount}}</view><view class="fst-l">棵巨树</view></view>
+    </view>
+  </view>
+  <view class="error-tip" wx:if="{{error}}">
+    <text>{{error}}</text>
+    <text class="retry-btn" hover-class="tap-soft" bindtap="onRetry">重试</text>
+  </view>
+  <view class="f-legend">
+    <view class="fl-i"><text>🌱</text><text>小苗</text></view>
+    <view class="fl-i"><text>🌿</text><text>小树</text></view>
+    <view class="fl-i"><text>🌳</text><text>大树</text></view>
+    <view class="fl-i"><text>🌲</text><text>巨树</text></view>
+  </view>
+  <view class="f-grid" wx:if="{{trees.length>0}}">
+    <view wx:for="{{trees}}" wx:key="index" class="f-cell {{item?'f-filled':'f-empty'}}" style="width:{{gridCols===3?'calc(33.33% - 8rpx)':'calc(25% - 9rpx)'}}" hover-class="tap-card" hover-stay-time="80" data-tree="{{item}}" bindtap="onTreeTap">
+      <block wx:if="{{item}}">
+        <view class="f-em f-{{item.treeType}}">{{item.treeType==='seedling'?'🌱':item.treeType==='small'?'🌿':item.treeType==='medium'?'🌳':'🌲'}}</view>
+        <view class="f-date">{{item.date.slice(5)}}</view>
+      </block>
+    </view>
+  </view>
+  <view class="empty-wrap" wx:if="{{!loading&&trees.length===0}}">
+    <view class="empty-icon">🌱</view><view class="empty-text">森林还是空的，完成第一次打卡种下第一棵树！</view>
+  </view>
+  <view class="sec-title" wx:if="{{stats&&stats.totalTrees>0}}">树木构成</view>
+  <view class="f-type-row" wx:if="{{stats&&stats.totalTrees>0}}">
+    <view class="fty"><view class="fty-e">🌲</view><view class="fty-n">{{stats.giantCount}}</view><view class="fty-l">巨树</view></view>
+    <view class="fty"><view class="fty-e">🌳</view><view class="fty-n">{{stats.mediumCount}}</view><view class="fty-l">大树</view></view>
+    <view class="fty"><view class="fty-e">🌿</view><view class="fty-n">{{stats.smallCount}}</view><view class="fty-l">小树</view></view>
+    <view class="fty"><view class="fty-e">🌱</view><view class="fty-n">{{stats.seedlingCount}}</view><view class="fty-l">小苗</view></view>
+  </view>
+  <view class="safe-bottom"></view>
+  <view class="overlay {{showDetail?'ov-show':''}}" bindtap="onCloseDetail">
+    <view class="det-card {{showDetail?'ov-card-show':''}}" catchtap="onCloseDetail">
+      <view class="det-em">{{selTree&&selTree.treeType==='seedling'?'🌱':selTree&&selTree.treeType==='small'?'🌿':selTree&&selTree.treeType==='medium'?'🌳':'🌲'}}</view>
+      <view class="det-label">{{selTree.label}}</view>
+      <view class="det-date">{{selTree.date}}</view>
+      <view class="det-div"></view>
+      <view class="det-row">
+        <view class="det-col"><view class="det-num">{{selTree.carbonScore}}</view><view class="det-lbl">碳排分</view></view>
+        <view class="det-vd"></view>
+        <view class="det-col"><view class="det-num">{{selTree.treeValue}}</view><view class="det-lbl">树木值</view></view>
+      </view>
+      <button class="ov-btn" hover-class="tap-soft" bindtap="onCloseDetail">关闭</button>
+    </view>
+  </view>
+</scroll-view>

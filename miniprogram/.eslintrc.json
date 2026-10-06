@@ -1,0 +1,30 @@
+{
+  "root": true,
+  "env": {
+    "node": true,
+    "es2021": true,
+    "browser": true
+  },
+  "extends": ["eslint:recommended", "prettier"],
+  "parserOptions": {
+    "ecmaVersion": 2021
+  },
+  "rules": {
+    "no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
+    "no-console": "off",
+    "no-constant-condition": ["error", { "checkLoops": false }],
+    "no-var": "error",
+    "prefer-const": "warn",
+    "eqeqeq": ["error", "always", { "null": "ignore" }],
+    "no-empty": ["error", { "allowEmptyCatch": true }]
+  },
+  "globals": {
+    "wx": "readonly",
+    "App": "readonly",
+    "Page": "readonly",
+    "Component": "readonly",
+    "getCurrentPages": "readonly",
+    "getApp": "readonly",
+    "requirePlugin": "readonly"
+  }
+}

@@ -1,0 +1,171 @@
+.pr-page {
+  background: linear-gradient(180deg, #eaf7ef 0, #f4f8f4 380rpx);
+  min-height: 100vh;
+  animation: pageIn 0.32s ease both;
+}
+.pr-hdr {
+  background: linear-gradient(150deg, #0f5f3a, #1a7a4a 58%, #35b772);
+  padding: 36rpx 30rpx 58rpx;
+  text-align: center;
+  color: #fff;
+  border-radius: 0 0 34rpx 34rpx;
+  box-shadow: 0 18rpx 46rpx rgba(26, 122, 74, 0.18);
+}
+.av-btn {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 60rpx;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0 auto 16rpx;
+  display: block;
+  position: relative;
+}
+.av-btn::after {
+  border: none;
+}
+.av-img {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 60rpx;
+  border: 4rpx solid rgba(255, 255, 255, 0.5);
+  display: block;
+}
+.av-def {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 60rpx;
+  background: rgba(255, 255, 255, 0.2);
+  border: 4rpx solid rgba(255, 255, 255, 0.4);
+  font-size: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.av-badge {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 36rpx;
+  height: 36rpx;
+  background: #fff;
+  border-radius: 50%;
+  font-size: 18rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.nick-input {
+  background: rgba(255, 255, 255, 0.18);
+  border: 1rpx solid rgba(255, 255, 255, 0.18);
+  border-radius: 18rpx;
+  padding: 12rpx 20rpx;
+  color: #fff;
+  font-size: 32rpx;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 12rpx;
+  width: auto;
+}
+.pr-lv-tag {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 40rpx;
+  padding: 6rpx 24rpx;
+  font-size: 22rpx;
+}
+.pr-stats {
+  display: flex;
+  gap: 12rpx;
+  margin: -24rpx 30rpx 0;
+  position: relative;
+  z-index: 1;
+}
+.prs {
+  flex: 1;
+  background: #fff;
+  border-radius: 22rpx;
+  padding: 18rpx 8rpx;
+  text-align: center;
+  box-shadow: 0 14rpx 34rpx rgba(22, 88, 54, 0.08);
+  border: 1rpx solid rgba(31, 122, 74, 0.05);
+  animation: cardIn 0.34s ease both;
+}
+.prs-n {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #1a7a4a;
+}
+.prs-l {
+  font-size: 18rpx;
+  color: #999;
+  margin-top: 5rpx;
+}
+.pr-lv-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4rpx;
+}
+.pr-lv-name {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #222;
+}
+.pr-lv-sub {
+  font-size: 22rpx;
+  color: #999;
+}
+.pr-lv-pl {
+  display: flex;
+  justify-content: space-between;
+  font-size: 20rpx;
+  color: #aaa;
+}
+.menu-card {
+  background: #fff;
+  border-radius: 26rpx;
+  margin: 0 30rpx;
+  overflow: hidden;
+  box-shadow: 0 14rpx 38rpx rgba(22, 88, 54, 0.08);
+  border: 1rpx solid rgba(31, 122, 74, 0.05);
+}
+.mi {
+  display: flex;
+  align-items: center;
+  gap: 18rpx;
+  padding: 27rpx 24rpx;
+  transition: all 0.18s ease;
+}
+.mi-icon {
+  width: 58rpx;
+  height: 58rpx;
+  border-radius: 16rpx;
+  font-size: 26rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.mi-txt {
+  flex: 1;
+  font-size: 28rpx;
+  color: #26352d;
+  font-weight: 500;
+}
+.mi-arr {
+  font-size: 28rpx;
+  color: #ccc;
+}
+.mi-div {
+  height: 1rpx;
+  background: #f5f5f5;
+  margin: 0 24rpx;
+}
+.pr-ver {
+  text-align: center;
+  font-size: 20rpx;
+  color: #ccc;
+  padding: 24rpx;
+}

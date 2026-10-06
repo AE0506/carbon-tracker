@@ -1,0 +1,30 @@
+<scroll-view scroll-y class="guide-page" refresher-enabled bindrefresherrefresh="onPullDownRefresh">
+  <view class="guide-hdr">
+    <view class="gh-icon">🌿</view>
+    <view class="gh-title">低碳建议</view>
+    <view class="gh-sub">探索可持续生活方式，减少碳足迹</view>
+  </view>
+
+  <view class="category-bar">
+    <scroll-view scroll-x class="category-scroll">
+      <view wx:for="{{categories}}" wx:key="id" class="category-item {{selectedCategory===item.id?'active':''}}" hover-class="tap-soft" hover-stay-time="80" bindtap="onCategoryTap" data-id="{{item.id}}">
+        {{item.name}}
+      </view>
+    </scroll-view>
+  </view>
+
+  <view class="guide-content">
+    <view wx:for="{{currentGuide}}" wx:key="id" class="guide-card">
+      <view class="gc-icon">{{item.icon}}</view>
+      <view class="gc-content">
+        <view class="gc-title">{{item.title}}</view>
+        <view class="gc-desc">{{item.description}}</view>
+        <view class="gc-tips" wx:if="{{item.tips && item.tips.length}}">
+          <view wx:for="{{item.tips}}" wx:key="index" class="gc-tip">• {{item}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="safe-bottom"></view>
+</scroll-view>

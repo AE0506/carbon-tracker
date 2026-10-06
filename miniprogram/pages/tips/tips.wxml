@@ -1,0 +1,71 @@
+<!-- pages/tips/tips.wxml -->
+<scroll-view scroll-y class="tips-page">
+  <!-- 搜索栏 -->
+  <view class="search-bar">
+    <view class="search-input-wrap">
+      <text class="search-icon">🔍</text>
+      <input class="search-input" placeholder="搜索知识库..." value="{{searchKey}}" bindinput="onSearchInput" bindconfirm="onSearchInput" confirm-type="search"/>
+      <text class="search-clear" wx:if="{{searchKey}}" bindtap="onClearSearch">✕</text>
+    </view>
+  </view>
+
+  <!-- 分类筛选 -->
+  <scroll-view scroll-x class="cat-scroll">
+    <view class="cat-row">
+      <view wx:for="{{cats}}" wx:key="key"
+        class="cat-btn {{activeCat===item.key?'cat-on':''}}"
+        hover-class="tap-soft"
+        data-key="{{item.key}}" bindtap="onCatTap">
+        {{item.label}}
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 搜索结果提示 -->
+  <view class="search-result-tip" wx:if="{{searchKey}}">
+    找到 {{filtered.length}} 条相关知识
+  </view>
+
+  <!-- 知识卡片列表 -->
+  <view class="tips-list">
+    <view wx:for="{{filtered}}" wx:key="id"
+      class="tip-card"
+      hover-class="tap-card"
+      data-id="{{item.id}}" bindtap="onTipTap">
+      <view class="tip-top">
+        <view class="tip-icon-wrap">{{item.icon}}</view>
+        <view class="tip-meta">
+          <view class="tip-cat-lbl">{{item.catLabel}}</view>
+          <view class="tip-tag" style="background:{{item.tagColor}}20;color:{{item.tagColor}}">{{item.tag}}</view>
+        </view>
+        <view class="tip-fav {{favorites.includes(item.id)?'fav-on':''}}"
+          hover-class="tap-icon"
+          data-id="{{item.id}}" catchtap="onToggleFav">
+          {{favorites.includes(item.id)?'❤️':'🤍'}}
+        </view>
+      </view>
+      <view class="tip-title">{{item.title}}</view>
+      <view class="tip-preview">{{item.body.slice(0,45)}}...</view>
+    </view>
+  </view>
+
+  <view class="safe-bottom"></view>
+
+  <!-- 详情弹窗 -->
+  <view class="overlay {{showDetail?'ov-show':''}}" bindtap="onCloseDetail">
+    <view class="tip-detail {{showDetail?'ov-card-show':''}}" catchtap="onCloseDetail">
+      <view class="td-icon">{{detail.icon}}</view>
+      <view class="td-title">{{detail.title}}</view>
+      <view class="td-tag" style="background:{{detail.tagColor}}20;color:{{detail.tagColor}}">{{detail.tag}}</view>
+      <view class="td-body">{{detail.body}}</view>
+      <view class="td-actions">
+        <view class="td-fav-btn {{favorites.includes(detail.id)?'fav-on':''}}"
+          hover-class="tap-soft"
+          data-id="{{detail.id}}" bindtap="onToggleFav">
+          {{favorites.includes(detail.id)?'❤️ 已收藏':'🤍 收藏'}}
+        </view>
+        <view class="td-close" hover-class="tap-soft" bindtap="onCloseDetail">关闭</view>
+      </view>
+    </view>
+  </view>
+</scroll-view>

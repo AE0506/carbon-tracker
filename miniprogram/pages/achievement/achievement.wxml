@@ -1,0 +1,50 @@
+<scroll-view scroll-y class="ach-page">
+  <view class="ach-hdr"><view class="ach-hdr-t">成就中心</view><view class="ach-hdr-s">记录你的低碳成长之路</view></view>
+  <view class="lv-big" wx:if="{{levelProgress}}">
+    <view class="lvc"><view class="lvc-l">LEVEL</view><view class="lvc-n">{{levelProgress.lvInfo.lv}}</view></view>
+    <view class="lv-name">{{levelProgress.lvInfo.name}}</view>
+    <view class="lv-sub">{{levelProgress.lvInfo.title}}</view>
+    <view class="lv-next">再积累 {{levelProgress.remaining}} 分升级</view>
+    <view class="prog-track" style="margin:16rpx 40rpx 10rpx"><view class="prog-fill" style="width:{{levelProgress.pct}}%"></view></view>
+    <view class="lv-pl"><text>{{levelProgress.current}}/{{levelProgress.next}}</text><text>{{levelProgress.nextLvInfo.name}} Lv.{{levelProgress.nextLvInfo.lv}}</text></view>
+  </view>
+  <view class="sec-title">树种统计</view>
+  <view class="tree-row">
+    <view class="tr-card">
+      <view class="tr-icon">🌱</view>
+      <view class="tr-num">{{treeStats.seedling}}</view>
+      <view class="tr-label">小苗</view>
+    </view>
+    <view class="tr-card">
+      <view class="tr-icon">🌿</view>
+      <view class="tr-num">{{treeStats.small}}</view>
+      <view class="tr-label">小树</view>
+    </view>
+    <view class="tr-card">
+      <view class="tr-icon">🌳</view>
+      <view class="tr-num">{{treeStats.medium}}</view>
+      <view class="tr-label">大树</view>
+    </view>
+    <view class="tr-card">
+      <view class="tr-icon">🌲</view>
+      <view class="tr-num">{{treeStats.giant}}</view>
+      <view class="tr-label">巨树</view>
+    </view>
+  </view>
+  <view class="sec-title">连续打卡</view>
+  <view class="streak-box">
+    <view class="str-fire">🔥</view>
+    <view class="str-info"><view class="str-main">已连续打卡 {{streak}} 天</view><view class="str-sub">打卡 7 天解锁「绿色坚持者」成就</view></view>
+    <view class="str-num">{{streak}}</view>
+  </view>
+  <view class="sec-title">成就徽章</view>
+  <view class="bdg-grid">
+    <view wx:for="{{badges}}" wx:key="id" class="bdg {{item.unlocked?'bdg-on':'bdg-off'}}">
+      <view class="bdg-icon {{item.unlocked?'':'bdg-lock'}}">{{item.icon}}</view>
+      <view class="bdg-name">{{item.name}}</view>
+      <view class="bdg-desc">{{item.desc}}</view>
+      <view class="bdg-st {{item.unlocked?'bdg-st-on':'bdg-st-off'}}">{{item.unlocked?'已解锁':'未达成'}}</view>
+    </view>
+  </view>
+  <view class="safe-bottom"></view>
+</scroll-view>

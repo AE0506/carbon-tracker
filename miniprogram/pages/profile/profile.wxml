@@ -1,0 +1,50 @@
+<scroll-view scroll-y class="pr-page">
+  <view class="pr-hdr">
+    <button class="av-btn" hover-class="tap-icon" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">
+      <image wx:if="{{userInfo.avatarUrl}}" src="{{userInfo.avatarUrl}}" class="av-img" mode="aspectFill"/>
+      <view wx:else class="av-def">🌿</view>
+      <view class="av-badge">✏️</view>
+    </button>
+    <input class="nick-input" type="nickname" value="{{userInfo.nickname}}" placeholder="点击修改昵称" bindblur="onNickConfirm" bindconfirm="onNickConfirm" maxlength="20"/>
+    <view class="pr-lv-tag" wx:if="{{levelProgress}}">{{levelProgress.lvInfo.name}} · Lv.{{levelProgress.lvInfo.lv}}</view>
+  </view>
+  <view class="pr-stats">
+    <view class="prs"><view class="prs-n">{{stats.totalDays}}</view><view class="prs-l">累计打卡</view></view>
+    <view class="prs"><view class="prs-n">{{stats.totalPoints}}</view><view class="prs-l">累计积分</view></view>
+    <view class="prs"><view class="prs-n">{{stats.totalTrees}}</view><view class="prs-l">种树棵数</view></view>
+    <view class="prs"><view class="prs-n">{{stats.lowPct}}%</view><view class="prs-l">低碳率</view></view>
+  </view>
+  <view class="card pr-lv-card" style="margin-top:16rpx" wx:if="{{levelProgress}}">
+    <view class="pr-lv-row"><view class="pr-lv-name">{{levelProgress.lvInfo.name}}</view><view class="badge-lv">Lv.{{levelProgress.lvInfo.lv}}</view></view>
+    <view class="pr-lv-sub">{{levelProgress.lvInfo.title}}</view>
+    <view class="prog-track" style="margin:16rpx 0 10rpx"><view class="prog-fill" style="width:{{levelProgress.pct}}%"></view></view>
+    <view class="pr-lv-pl"><text>{{levelProgress.current}} 积分</text><text>→ Lv.{{levelProgress.nextLvInfo.lv}} 需 {{levelProgress.next}} 分</text></view>
+  </view>
+  <view class="sec-title" style="margin-top:8rpx">功能菜单</view>
+  <view class="menu-card">
+    <view class="mi" hover-class="tap-soft" bindtap="goLearn"><view class="mi-icon" style="background:#e8f5ee">📚</view><view class="mi-txt">碳知识学院</view><view class="mi-arr">›</view></view>
+    <view class="mi-div"></view>
+    <view class="mi" hover-class="tap-soft" bindtap="goAchieve"><view class="mi-icon" style="background:#e8f5ee">🏆</view><view class="mi-txt">我的成就</view><view class="mi-arr">›</view></view>
+    <view class="mi-div"></view>
+    <view class="mi" hover-class="tap-soft" bindtap="goForest"><view class="mi-icon" style="background:#e8f5ee">🌳</view><view class="mi-txt">我的森林</view><view class="mi-arr">›</view></view>
+    <view class="mi-div"></view>
+    <view class="mi" hover-class="tap-soft" bindtap="goLeaderboard"><view class="mi-icon" style="background:#fff8e8">🏅</view><view class="mi-txt">排行榜</view><view class="mi-arr">›</view></view>
+    <view class="mi-div"></view>
+    <view class="mi" hover-class="tap-soft" bindtap="goChallenge"><view class="mi-icon" style="background:#fff5e0">⚡</view><view class="mi-txt">每日挑战</view><view class="mi-arr">›</view></view>
+    <view class="mi-div"></view>
+    <view class="mi" hover-class="tap-soft" bindtap="goHistory"><view class="mi-icon" style="background:#f0f5ff">📅</view><view class="mi-txt">打卡历史</view><view class="mi-arr">›</view></view>
+    <view class="mi-div"></view>
+    <view class="mi" hover-class="tap-soft" bindtap="goStats"><view class="mi-icon" style="background:#e8f0ff">📊</view><view class="mi-txt">数据报告</view><view class="mi-arr">›</view></view>
+    <view class="mi-div"></view>
+    <view class="mi" hover-class="tap-soft" bindtap="goTips"><view class="mi-icon" style="background:#e8f0ff">💡</view><view class="mi-txt">低碳知识库</view><view class="mi-arr">›</view></view>
+    <view class="mi-div"></view>
+    <!-- v6.7: onReminder 暂未配置模板ID，wx:if 隐藏 -->
+    <view wx:if="{{false}}" class="mi" hover-class="tap-soft" bindtap="onReminder"><view class="mi-icon" style="background:#e8f5ee">🔔</view><view class="mi-txt">打卡提醒</view><view class="mi-arr">›</view></view>
+    <view wx:if="{{false}}" class="mi-div"></view>
+    <view class="mi" hover-class="tap-soft" bindtap="onClearCache"><view class="mi-icon" style="background:#fff5e8">🗑️</view><view class="mi-txt">清除本地缓存</view><view class="mi-arr">›</view></view>
+    <view class="mi-div"></view>
+    <view class="mi" hover-class="tap-soft" bindtap="onLogout"><view class="mi-icon" style="background:#fef0eb">🚪</view><view class="mi-txt" style="color:#e05c3a">退出登录</view><view class="mi-arr" style="color:#e05c3a">›</view></view>
+  </view>
+  <view class="pr-ver">碳迹低碳行为记录系统 · v6.7.0</view>
+  <view class="safe-bottom"></view>
+</scroll-view>

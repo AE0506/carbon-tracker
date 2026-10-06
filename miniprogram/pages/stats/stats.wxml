@@ -1,0 +1,44 @@
+<view class="stats-page">
+  <view class="error-tip" wx:if="{{error}}">
+    <text>{{error}}</text>
+    <text class="retry-btn" hover-class="tap-soft" bindtap="onRetry">重试</text>
+  </view>
+  <view class="sum-row" wx:if="{{!error}}">
+    <view class="sum-box"><view class="sum-n">{{summary.avgScore}}</view><view class="sum-l">周均评分</view></view>
+    <view class="sum-box"><view class="sum-n" style="color:#1a7a4a">{{summary.lowDays}}</view><view class="sum-l">低碳天数</view></view>
+    <view class="sum-box"><view class="sum-n">{{summary.bestScore}}</view><view class="sum-l">最佳单日</view></view>
+    <view class="sum-box"><view class="sum-n">{{summary.totalDays}}</view><view class="sum-l">已记录</view></view>
+  </view>
+  <view class="insight-bar" wx:if="{{weekInsight}}"><text>💬 {{weekInsight}}</text></view>
+  <view class="sec-title">本周碳评分趋势（越低越好）</view>
+  <view class="card">
+    <view class="bar-chart">
+      <view wx:for="{{weekData}}" wx:key="index" class="bc-col">
+        <view class="bc-val">{{item.scored?item.score:''}}</view>
+        <view class="bc-wrap"><view class="bc-bar" style="height:{{item.barH}}rpx;background:{{item.barColor}};{{item.isToday?'outline:3rpx solid #1a7a4a;outline-offset:-1rpx;':''}}"></view></view>
+        <view class="bc-lbl {{item.isToday?'bc-today':''}}">{{item.label}}</view>
+      </view>
+    </view>
+    <view class="legend-row">
+      <view class="leg"><view class="leg-dot" style="background:#1a7a4a"></view><text>低碳≤3</text></view>
+      <view class="leg"><view class="leg-dot" style="background:#f0a500"></view><text>一般4-6</text></view>
+      <view class="leg"><view class="leg-dot" style="background:#e05c3a"></view><text>偏高≥7</text></view>
+    </view>
+  </view>
+  <view class="sec-title" wx:if="{{behaviorStats.length>0}}">行为偏好分析</view>
+  <view class="card" wx:if="{{behaviorStats.length>0}}">
+    <view wx:for="{{behaviorStats}}" wx:key="name" class="bh-item">
+      <view class="bh-icon" style="background:{{item.bg}}">{{item.icon}}</view>
+      <view class="bh-info"><view class="bh-name">{{item.name}}</view><view class="prog-track bh-track"><view class="prog-fill" style="width:{{item.pct}}%;background:{{item.color}}"></view></view></view>
+      <view class="bh-pct">{{item.pct}}%</view>
+    </view>
+  </view>
+  <view class="empty-wrap" wx:if="{{!loading&&summary.totalDays===0}}">
+    <view class="empty-icon">📊</view><view class="empty-text">本周还没有数据，快去打卡吧</view>
+  </view>
+    <view class="history-entry" hover-class="tap-card" hover-stay-time="90" bindtap="goHistory">
+    <view class="he-left"><view class="he-icon">📅</view><view class="he-txt">查看完整打卡历史</view></view>
+    <view class="he-arr">›</view>
+  </view>
+<view class="safe-bottom"></view>
+</view>

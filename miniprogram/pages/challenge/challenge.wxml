@@ -1,0 +1,79 @@
+<!-- pages/challenge/challenge.wxml -->
+<scroll-view scroll-y class="chal-page">
+
+  <!-- 今日挑战卡 -->
+  <view class="today-chal">
+    <view class="tc-header">
+      <view class="tc-kicker">⚡ 今日挑战</view>
+      <view class="tc-date">{{today}}</view>
+    </view>
+    <view class="tc-body">
+      <view class="tc-icon-big">{{challenge.icon}}</view>
+      <view class="tc-title">{{challenge.title}}</view>
+      <view class="tc-desc">{{challenge.desc}}</view>
+      <view class="tc-tip-box"><text class="tc-tip-label">💡 </text><text class="tc-tip">{{challenge.tip}}</text></view>
+    </view>
+    <view class="tc-reward">
+      <view class="tc-reward-left">
+        <view class="tc-reward-lbl">完成奖励</view>
+        <view class="tc-reward-pts">+{{challenge.bonus}} 积分</view>
+      </view>
+      <view class="tc-status {{completed?'st-done':'st-todo'}}">
+        {{completed ? (bonusClaimed?'✅ 已领取':'🎁 领取中...') : '进行中'}}
+      </view>
+    </view>
+    <view class="tc-target">
+      <view class="tc-target-lbl">打卡要求</view>
+      <view class="tc-target-val">{{challenge.target}}</view>
+    </view>
+    <button wx:if="{{!completed}}" class="tc-btn" hover-class="tap-soft" bindtap="onGoRecord">去打卡完成挑战 →</button>
+    <view wx:else class="tc-done-bar">🌟 挑战达成！额外积分已记入账户</view>
+  </view>
+
+  <!-- 进度环 -->
+  <view class="prog-section">
+    <view class="prog-circle {{completed?'prog-done':''}}">
+      <view class="prog-inner">
+        <view class="prog-em">{{completed?'🏆':'🎯'}}</view>
+        <view class="prog-pct">{{completed?'100%':'0%'}}</view>
+        <view class="prog-lbl">{{completed?'完成':'待完成'}}</view>
+      </view>
+    </view>
+    <view class="prog-info">
+      <view class="pi-item"><view class="pi-dot" style="background:#1a7a4a"></view><view class="pi-txt">今日已打卡</view><view class="pi-val {{todayAction?'pi-yes':'pi-no'}}">{{todayAction?'✓':'✗'}}</view></view>
+      <view class="pi-item"><view class="pi-dot" style="background:#f0a500"></view><view class="pi-txt">挑战条件达成</view><view class="pi-val {{completed?'pi-yes':'pi-no'}}">{{completed?'✓':'✗'}}</view></view>
+      <view class="pi-item"><view class="pi-dot" style="background:#e05c3a"></view><view class="pi-txt">奖励积分已领</view><view class="pi-val {{bonusClaimed?'pi-yes':'pi-no'}}">{{bonusClaimed?'✓':'✗'}}</view></view>
+    </view>
+  </view>
+
+  <!-- 本周挑战历史 -->
+  <view class="hist-section">
+    <view class="hist-hdr" hover-class="tap-soft" bindtap="onToggleHistory">
+      <view class="hist-title">近期挑战记录</view>
+      <view class="hist-arrow">{{showHistory?'▲':'▼'}}</view>
+    </view>
+    <view wx:if="{{showHistory}}" class="hist-list">
+      <view wx:for="{{historyDays}}" wx:key="date" class="hist-item">
+        <view class="hi-icon">{{item.challenge.icon}}</view>
+        <view class="hi-info">
+          <view class="hi-title">{{item.challenge.title}}</view>
+          <view class="hi-date">{{item.dateLabel}}</view>
+        </view>
+        <view class="hi-status {{item.claimed?'hi-done':'hi-miss'}}">{{item.claimed?'✅':'—'}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 所有挑战预览 -->
+  <view class="sec-title" style="padding:32rpx 30rpx 16rpx;font-size:26rpx;color:#888;">全部挑战类型</view>
+  <view class="all-chal-grid">
+    <view wx:for="{{allChallenges}}" wx:key="id" class="ac-item {{item.id===challenge.id?'ac-today':''}}">
+      <view class="ac-icon">{{item.icon}}</view>
+      <view class="ac-title">{{item.title}}</view>
+      <view class="ac-bonus">+{{item.bonus}}分</view>
+      <view class="ac-today-tag" wx:if="{{item.id===challenge.id}}">今日</view>
+    </view>
+  </view>
+
+  <view class="safe-bottom"></view>
+</scroll-view>
